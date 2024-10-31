@@ -110,7 +110,8 @@ public class FieldController {
             if (!RegexProcess.FieldCodeMatcher(fieldCode)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            //TODO: call service layer
+            // call service layer
+            fieldService.deleteField(fieldCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();
