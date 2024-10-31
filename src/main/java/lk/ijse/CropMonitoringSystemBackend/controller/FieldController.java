@@ -51,10 +51,6 @@ public class FieldController {
             fieldDTO.setImage2(image2Base64);
             fieldDTO.setExtent_size(Double.valueOf(extentSize));
 
-            System.out.println(fieldDTO.getField_code());
-            System.out.println(fieldDTO.getField_name());
-            System.out.println(fieldDTO.getLocation());
-            System.out.println(fieldDTO.getExtent_size());
             //call service layer
             fieldService.saveField(fieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -107,6 +103,22 @@ public class FieldController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @DeleteMapping(value = "/{fieldCode}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("fieldCode") String fieldCode) {
+        try {
+            if (!RegexProcess.FieldCodeMatcher(fieldCode)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            //TODO: call service layer
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
 }
