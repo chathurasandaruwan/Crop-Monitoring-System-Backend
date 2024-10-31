@@ -3,6 +3,7 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
+import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/field")
@@ -55,5 +57,9 @@ public class FieldController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping(value = "/getAllFields", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FieldDTO> getAllFields() {
+        return null;
     }
 }
