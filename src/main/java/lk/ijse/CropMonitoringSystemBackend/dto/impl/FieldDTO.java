@@ -17,7 +17,7 @@ public class FieldDTO implements SuperDTO {
     private Double extent_size;
     private String image1;
     private String image2;
-    private List<CropDTO> cropDTOS;
-    private List<StaffDTO> staffDTOS;
+   /* private List<CropDTO> cropDTOS;
+    private List<StaffDTO> staffDTOS;*/
 
 }

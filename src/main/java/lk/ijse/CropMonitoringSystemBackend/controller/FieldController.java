@@ -2,8 +2,10 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.service.FieldService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
 import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/field")
 public class FieldController {
+    @Autowired
+    private FieldService fieldService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveField(
             @RequestPart("field_name") String fieldName,
@@ -50,7 +54,8 @@ public class FieldController {
             System.out.println(fieldDTO.getField_name());
             System.out.println(fieldDTO.getLocation());
             System.out.println(fieldDTO.getExtent_size());
-            //TODO:call service layer
+            //call service layer
+            fieldService.saveField(fieldDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
