@@ -65,6 +65,6 @@ public class FieldController {
     }
     @GetMapping(value = "/getAllFields", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getAllFields() {
-        return null;
+        return fieldService.getAllFields();
     }
 }

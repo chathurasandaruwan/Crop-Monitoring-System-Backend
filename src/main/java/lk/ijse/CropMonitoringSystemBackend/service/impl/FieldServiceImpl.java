@@ -10,6 +10,8 @@ import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class FieldServiceImpl implements FieldService {
@@ -23,6 +25,10 @@ public class FieldServiceImpl implements FieldService {
         if (saveField==null){
             throw new DataPersistException("Field not Saved");
         }
+    }
+    @Override
+    public List<FieldDTO> getAllFields() {
+        return mapping.asFieldDTOList(fieldDAO.findAll());
     }
 
 }
