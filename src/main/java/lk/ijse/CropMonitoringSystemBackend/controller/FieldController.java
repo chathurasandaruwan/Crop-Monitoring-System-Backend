@@ -97,7 +97,8 @@ public class FieldController {
             if(!RegexProcess.FieldCodeMatcher(fieldCode) || fieldDTO == null){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            //TODO: call service layer
+            //call service layer
+            fieldService.updateField(fieldCode,fieldDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();
