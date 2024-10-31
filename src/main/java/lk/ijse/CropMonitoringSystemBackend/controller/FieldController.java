@@ -2,6 +2,7 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.FieldService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
 import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
@@ -37,7 +38,7 @@ public class FieldController {
 
         // Create and set Point object
         Point point = new Point();
-        point.setLocation(Double.parseDouble(x),Double.parseDouble(y));
+        point.setLocation(Double.valueOf(x),Double.valueOf(y));
         try {
 
             image1Base64 = AppUtil.imageToBase64(image1.getBytes());
@@ -67,4 +68,44 @@ public class FieldController {
     public List<FieldDTO> getAllFields() {
         return fieldService.getAllFields();
     }
+    @PutMapping(value = "/{fieldCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateField(
+            @RequestPart("field_name") String fieldName,
+            @RequestPart("location.x") String x,
+            @RequestPart("location.y") String y,
+            @RequestPart("extent_size") String extentSize,
+            @RequestPart("image1") MultipartFile image1,
+            @RequestPart("image2") MultipartFile image2,
+            @PathVariable String fieldCode){
+        //image ---> Base64
+        String image1Base64 ="";
+        String image2Base64 ="";
+        // Create and set Point object
+        Point point = new Point();
+        point.setLocation(Double.valueOf(x),Double.valueOf(y));
+        try {
+            image1Base64 = AppUtil.imageToBase64(image1.getBytes());
+            image2Base64 = AppUtil.imageToBase64(image2.getBytes());
+            FieldDTO fieldDTO = new FieldDTO();
+            fieldDTO.setField_code(fieldCode);
+            fieldDTO.setField_name(fieldName);
+            fieldDTO.setLocation(point);
+            fieldDTO.setImage1(image1Base64);
+            fieldDTO.setImage2(image2Base64);
+            fieldDTO.setExtent_size(Double.valueOf(extentSize));
+
+            if(!RegexProcess.FieldCodeMatcher(fieldCode) || fieldDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            //TODO: call service layer
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        }
+
 }
