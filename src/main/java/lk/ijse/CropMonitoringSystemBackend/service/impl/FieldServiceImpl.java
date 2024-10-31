@@ -58,4 +58,9 @@ public class FieldServiceImpl implements FieldService {
         }
     }
 
+    @Override
+    public FieldDTO getSelectedFieldByName(String name) {
+        return null;
+    }
+
 }

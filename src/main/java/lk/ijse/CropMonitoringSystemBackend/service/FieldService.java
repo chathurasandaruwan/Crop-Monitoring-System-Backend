@@ -12,4 +12,6 @@ public interface FieldService {
     void updateField(String fieldCode, FieldDTO fieldDTO);
 
     void deleteField(String fieldCode);
+
+    FieldDTO getSelectedFieldByName(String name);
 }

@@ -121,5 +121,14 @@ public class FieldController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldDTO getSelectedFieldByName(@PathVariable("name") String name) {
+        try {
+            return fieldService.getSelectedFieldByName(name);
+        } catch (FieldNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
