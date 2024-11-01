@@ -40,7 +40,7 @@ public class FieldServiceImpl implements FieldService {
         if (!tmpField.isPresent()){
             throw new FieldNotFoundException("Field Not Found");
         }else {
-            tmpField.get().setField_name(fieldDTO.getField_name());
+            tmpField.get().setFieldName(fieldDTO.getField_name());
             tmpField.get().setLocation(fieldDTO.getLocation());
             tmpField.get().setExtent_size(fieldDTO.getExtent_size());
             tmpField.get().setImage1(fieldDTO.getImage1());
@@ -60,7 +60,12 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public FieldDTO getSelectedFieldByName(String name) {
-        return null;
+        Optional<FieldEntity> existField = fieldDAO.findByFieldName(name);
+        if (!existField.isPresent()){
+            throw new FieldNotFoundException("Field Not Found");
+        }else {
+            return mapping.toFieldDTO(existField.get());
+        }
     }
 
 }

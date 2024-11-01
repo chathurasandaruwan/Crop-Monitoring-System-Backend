@@ -1,5 +1,7 @@
 package lk.ijse.CropMonitoringSystemBackend.controller;
 
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedFieldErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.FieldStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
@@ -122,12 +124,12 @@ public class FieldController {
         }
     }
     @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public FieldDTO getSelectedFieldByName(@PathVariable("name") String name) {
+    public FieldStatus getSelectedFieldByName(@PathVariable("name") String name) {
         try {
             return fieldService.getSelectedFieldByName(name);
         } catch (FieldNotFoundException e) {
             e.printStackTrace();
-            return null;
+            return new SelectedFieldErrorStatus(1, "Field Not Found");
         }
     }
 

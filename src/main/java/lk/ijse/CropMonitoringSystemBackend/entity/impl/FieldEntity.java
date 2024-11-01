@@ -23,7 +23,7 @@ public class FieldEntity implements SuperEntity {
     @Id
     private String field_code;
     @Column(unique = true)
-    private String field_name;
+    private String fieldName;
     private Point location;
     private Double extent_size;
     @Column(columnDefinition = "LONGTEXT")
