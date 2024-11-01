@@ -1,6 +1,8 @@
 package lk.ijse.CropMonitoringSystemBackend.util;
 
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.entity.impl.CropEntity;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.FieldEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -24,5 +26,16 @@ public class Mapping {
 
     public List<FieldDTO> asFieldDTOList(List<FieldEntity> all) {
         return mapper.map(all, new TypeToken<List<FieldDTO>>(){}.getType());
+    }
+    //    for crop mapping
+    public CropDTO toCropDTO(CropEntity crop){
+        return mapper.map(crop, CropDTO.class);
+    }
+    public CropEntity toCropEntity(CropDTO crop){
+        return mapper.map(crop,CropEntity.class);
+    }
+
+    public List<CropDTO> asCropDTOList(List<CropEntity> all) {
+        return mapper.map(all, new TypeToken<List<CropDTO>>(){}.getType());
     }
 }
