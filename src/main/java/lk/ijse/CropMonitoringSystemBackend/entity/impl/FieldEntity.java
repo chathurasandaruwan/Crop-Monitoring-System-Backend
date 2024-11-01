@@ -1,9 +1,6 @@
 package lk.ijse.CropMonitoringSystemBackend.entity.impl;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.SuperEntity;
@@ -30,6 +27,8 @@ public class FieldEntity implements SuperEntity {
     private String image1;
     @Column(columnDefinition = "LONGTEXT")
     private String image2;
-    /*private List<CropEntity> cropDTOS;
-    private List<StaffEntity> staffDTOS;*/
+
+    @OneToMany(mappedBy = "field")
+    private List<CropEntity> cropDTOS;
+    /*private List<StaffEntity> staffDTOS;*/
 }
