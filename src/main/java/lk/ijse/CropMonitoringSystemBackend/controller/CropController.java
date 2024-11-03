@@ -96,8 +96,8 @@ public class CropController {
             if(!RegexProcess.CropCodeMatcher(cropDTO.getCrop_code()) || cropDTO == null){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            //TODO:call service layer
-
+            //call service layer
+            cropService.updateCrop(cropCode,cropDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();

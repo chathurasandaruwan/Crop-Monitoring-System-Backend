@@ -42,4 +42,17 @@ public class CropServiceImpl implements CropService {
             cropDAO.deleteById(cropCode);
         }
     }
+
+    @Override
+    public void updateCrop(String cropCode, CropDTO cropDTO) {
+        Optional<CropEntity> existCrop = cropDAO.findById(cropCode);
+        if (!existCrop.isPresent()){
+            throw new DataPersistException("Crop Not Found");
+        }else {
+            existCrop.get().setCommonName(cropDTO.getCommonName());
+            existCrop.get().setScientific_name(cropDTO.getScientific_name());
+            existCrop.get().setCategory(cropDTO.getCategory());
+            existCrop.get().setSeason(cropDTO.getSeason());
+        }
+    }
 }
