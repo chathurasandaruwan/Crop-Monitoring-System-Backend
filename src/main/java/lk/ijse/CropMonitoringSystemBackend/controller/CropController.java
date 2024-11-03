@@ -74,4 +74,38 @@ public class CropController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping(value = "/{cropCode}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateCrop(
+            @RequestPart("common_name") String common_name,
+            @RequestPart("scientific_name") String scientific_name,
+            @RequestPart("image")MultipartFile image,
+            @RequestPart("category")String category,
+            @RequestPart("season") String season,
+            @RequestPart("field_code")String field_code,
+            @PathVariable String cropCode){
+        String imageBase64 = "";
+        try {
+            imageBase64 = AppUtil.imageToBase64(image.getBytes());
+            CropDTO cropDTO = new CropDTO();
+            cropDTO.setCommonName(common_name);
+            cropDTO.setScientific_name(scientific_name);
+            cropDTO.setImage(imageBase64);
+            cropDTO.setCategory(category);
+            cropDTO.setSeason(season);
+            cropDTO.setField_code(field_code);
+            if(!RegexProcess.CropCodeMatcher(cropDTO.getCrop_code()) || cropDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            //TODO:call service layer
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
