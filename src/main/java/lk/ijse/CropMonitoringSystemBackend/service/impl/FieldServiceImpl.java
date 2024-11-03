@@ -40,7 +40,7 @@ public class FieldServiceImpl implements FieldService {
         if (!tmpField.isPresent()){
             throw new FieldNotFoundException("Field Not Found");
         }else {
-            tmpField.get().setFieldName(fieldDTO.getField_name());
+            tmpField.get().setFieldName(fieldDTO.getFieldName());
             tmpField.get().setLocation(fieldDTO.getLocation());
             tmpField.get().setExtent_size(fieldDTO.getExtent_size());
             tmpField.get().setImage1(fieldDTO.getImage1());

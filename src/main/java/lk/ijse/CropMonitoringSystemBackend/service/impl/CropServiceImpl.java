@@ -10,6 +10,8 @@ import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CropServiceImpl implements CropService {
@@ -23,5 +25,10 @@ public class CropServiceImpl implements CropService {
         if (saveCrop==null){
             throw new DataPersistException("Crop not Saved");
         }
+    }
+
+    @Override
+    public List<CropDTO> getAllCrops() {
+        return mapping.asCropDTOList(cropDAO.findAll());
     }
 }
