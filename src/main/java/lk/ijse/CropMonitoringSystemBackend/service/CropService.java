@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface CropService {
     void saveCrop(CropDTO cropDTO);
-
     List<CropDTO> getAllCrops();
+    void deleteCrop(String cropCode);
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,5 +31,15 @@ public class CropServiceImpl implements CropService {
     @Override
     public List<CropDTO> getAllCrops() {
         return mapping.asCropDTOList(cropDAO.findAll());
+    }
+
+    @Override
+    public void deleteCrop(String cropCode) {
+        Optional<CropEntity> existCrop = cropDAO.findById(cropCode);
+        if (!existCrop.isPresent()){
+            throw new DataPersistException("Crop Not Found");
+        }else {
+            cropDAO.deleteById(cropCode);
+        }
     }
 }

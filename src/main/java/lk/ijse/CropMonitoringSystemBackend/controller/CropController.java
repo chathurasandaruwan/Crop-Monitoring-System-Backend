@@ -64,7 +64,7 @@ public class CropController {
             if (!RegexProcess.CropCodeMatcher(CropCode)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            // TODO:call service layer
+            cropService.deleteCrop(CropCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();
