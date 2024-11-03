@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CropDTO implements SuperDTO {
     private String crop_code;
-    private String common_name;
+    private String commonName;
     private String scientific_name;
     private String image;
     private String category;
