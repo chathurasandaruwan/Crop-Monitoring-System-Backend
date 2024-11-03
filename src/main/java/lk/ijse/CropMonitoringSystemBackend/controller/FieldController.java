@@ -47,7 +47,7 @@ public class FieldController {
             image2Base64 = AppUtil.imageToBase64(image2.getBytes());
             FieldDTO fieldDTO = new FieldDTO();
             fieldDTO.setField_code(fieldCode);
-            fieldDTO.setField_name(fieldName);
+            fieldDTO.setFieldName(fieldName);
             fieldDTO.setLocation(point);
             fieldDTO.setImage1(image1Base64 );
             fieldDTO.setImage2(image2Base64);
@@ -86,7 +86,7 @@ public class FieldController {
             image2Base64 = AppUtil.imageToBase64(image2.getBytes());
             FieldDTO fieldDTO = new FieldDTO();
             fieldDTO.setField_code(fieldCode);
-            fieldDTO.setField_name(fieldName);
+            fieldDTO.setFieldName(fieldName);
             fieldDTO.setLocation(point);
             fieldDTO.setImage1(image1Base64);
             fieldDTO.setImage2(image2Base64);

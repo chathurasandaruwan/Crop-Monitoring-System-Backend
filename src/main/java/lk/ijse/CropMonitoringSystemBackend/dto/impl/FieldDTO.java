@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class FieldDTO implements FieldStatus {
     private String field_code;
-    private String field_name;
+    private String fieldName;
     private Point location;
     private Double extent_size;
     private String image1;
