@@ -107,7 +107,7 @@ public class FieldController {
         }
     }
     @DeleteMapping(value = "/{fieldCode}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("fieldCode") String fieldCode) {
+    public ResponseEntity<Void> deleteField(@PathVariable("fieldCode") String fieldCode) {
         try {
             if (!RegexProcess.FieldCodeMatcher(fieldCode)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

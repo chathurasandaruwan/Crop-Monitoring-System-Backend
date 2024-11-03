@@ -8,4 +8,10 @@ public class RegexProcess {
         Pattern regexPattern = Pattern.compile(regexForUserID);
         return regexPattern.matcher(userId).matches();
     }
+
+    public static boolean CropCodeMatcher(String cropCode) {
+        String regexForCropCode = "^CROP-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForCropCode);
+        return regexPattern.matcher(cropCode).matches();
+    }
 }

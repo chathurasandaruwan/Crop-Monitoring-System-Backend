@@ -2,8 +2,10 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.CropService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
+import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -54,5 +56,22 @@ public class CropController {
     @GetMapping(value = "/getAllCrops",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops(){
         return cropService.getAllCrops();
+    }
+
+    @DeleteMapping(value = "/{CropCode}")
+    public ResponseEntity<Void> deleteCrop(@PathVariable("CropCode") String CropCode) {
+        try {
+            if (!RegexProcess.CropCodeMatcher(CropCode)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            // TODO:call service layer
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
