@@ -30,5 +30,12 @@ public class FieldEntity implements SuperEntity {
 
     @OneToMany(mappedBy = "field")
     private List<CropEntity> cropDTOS;
-    /*private List<StaffEntity> staffDTOS;*/
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "staff_field_details",
+            joinColumns = @JoinColumn(name = "field_code"),
+            inverseJoinColumns = @JoinColumn(name = "staff_id")
+    )
+    private List<StaffEntity> staffs;
 }
