@@ -2,8 +2,10 @@ package lk.ijse.CropMonitoringSystemBackend.util;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.CropEntity;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.FieldEntity;
+import lk.ijse.CropMonitoringSystemBackend.entity.impl.StaffEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,9 @@ public class Mapping {
 
     public List<CropDTO> asCropDTOList(List<CropEntity> all) {
         return mapper.map(all, new TypeToken<List<CropDTO>>(){}.getType());
+    }
+//    for staff mapping
+    public StaffEntity toStaffEntity(StaffDTO staffDTO) {
+        return mapper.map(staffDTO,StaffEntity.class);
     }
 }
