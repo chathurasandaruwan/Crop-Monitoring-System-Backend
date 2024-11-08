@@ -19,6 +19,7 @@ public class FieldDTO implements FieldStatus {
     private String image1;
     private String image2;
     private List<CropDTO> cropDTOS;
+    private String staffId;
 //    private List<StaffDTO> staffDTOS;
 
 }

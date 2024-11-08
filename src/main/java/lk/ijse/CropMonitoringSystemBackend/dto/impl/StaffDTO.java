@@ -9,17 +9,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class StaffDTO implements SuperDTO {
     private String id;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private Designation designation;
     private Gender gender;
-    private Date joined_date;
+    private Date joinedDate;
     private Date DOB;
     private String address1;
     private String address2;
@@ -29,6 +30,7 @@ public class StaffDTO implements SuperDTO {
     private String contact_no;
     private String email;
     private Role role;
+    private List<FieldDTO> fieldDTOS;
 
 //    TODO:field and vehicle list need added
 
