@@ -12,5 +12,5 @@ public interface CropService {
 
     void updateCrop(String cropCode, CropDTO cropDTO);
 
-    FieldStatus getSelectedCropByName(String name);
+    CropDTO getSelectedCropByName(String name);
 }
