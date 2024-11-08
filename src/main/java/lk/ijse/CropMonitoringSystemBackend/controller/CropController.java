@@ -93,7 +93,7 @@ public class CropController {
             cropDTO.setCategory(category);
             cropDTO.setSeason(season);
             cropDTO.setField_code(field_code);
-            if(!RegexProcess.CropCodeMatcher(cropDTO.getCrop_code()) || cropDTO == null){
+            if(!RegexProcess.CropCodeMatcher(cropCode) || cropDTO == null){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             //call service layer

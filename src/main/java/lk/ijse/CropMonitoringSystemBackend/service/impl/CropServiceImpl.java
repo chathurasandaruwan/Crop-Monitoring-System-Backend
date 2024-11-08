@@ -2,8 +2,10 @@ package lk.ijse.CropMonitoringSystemBackend.service.impl;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.CropMonitoringSystemBackend.dao.CropDAO;
+import lk.ijse.CropMonitoringSystemBackend.dao.FieldDAO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.CropEntity;
+import lk.ijse.CropMonitoringSystemBackend.entity.impl.FieldEntity;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.service.CropService;
 import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
@@ -18,6 +20,11 @@ import java.util.Optional;
 public class CropServiceImpl implements CropService {
     @Autowired
     private CropDAO cropDAO;
+
+    @Autowired
+    private FieldDAO fieldDAO;
+
+
     @Autowired
     private Mapping mapping;
     @Override
@@ -49,10 +56,13 @@ public class CropServiceImpl implements CropService {
         if (!existCrop.isPresent()){
             throw new DataPersistException("Crop Not Found");
         }else {
+            Optional<FieldEntity> fieldEntity = fieldDAO.findById(cropDTO.getField_code());
             existCrop.get().setCommonName(cropDTO.getCommonName());
             existCrop.get().setScientific_name(cropDTO.getScientific_name());
+            existCrop.get().setImage(cropDTO.getImage());
             existCrop.get().setCategory(cropDTO.getCategory());
             existCrop.get().setSeason(cropDTO.getSeason());
+            existCrop.get().setField(fieldEntity.get());
         }
     }
 }
