@@ -1,5 +1,8 @@
 package lk.ijse.CropMonitoringSystemBackend.controller;
 
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedCropErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedFieldErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.FieldStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
@@ -105,6 +108,15 @@ public class CropController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldStatus getSelectedCropByName(@PathVariable("name") String name) {
+        try {
+            return cropService.getSelectedCropByName(name);
+        } catch (FieldNotFoundException e) {
+            e.printStackTrace();
+            return new SelectedCropErrorStatus(1, "Crop Not Found");
         }
     }
 
