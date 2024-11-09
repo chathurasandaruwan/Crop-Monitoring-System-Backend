@@ -45,7 +45,7 @@ public class CropServiceImpl implements CropService {
     public void deleteCrop(String cropCode) {
         Optional<CropEntity> existCrop = cropDAO.findById(cropCode);
         if (!existCrop.isPresent()){
-            throw new DataPersistException("Crop Not Found");
+            throw new CropNotFoundException("Crop Not Found");
         }else {
             cropDAO.deleteById(cropCode);
         }
@@ -55,7 +55,7 @@ public class CropServiceImpl implements CropService {
     public void updateCrop(String cropCode, CropDTO cropDTO) {
         Optional<CropEntity> existCrop = cropDAO.findById(cropCode);
         if (!existCrop.isPresent()){
-            throw new DataPersistException("Crop Not Found");
+            throw new CropNotFoundException("Crop Not Found");
         }else {
             Optional<FieldEntity> fieldEntity = fieldDAO.findById(cropDTO.getField_code());
             existCrop.get().setCommonName(cropDTO.getCommonName());

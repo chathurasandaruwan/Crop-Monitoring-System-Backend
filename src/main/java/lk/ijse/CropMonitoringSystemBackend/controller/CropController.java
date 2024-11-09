@@ -5,6 +5,7 @@ import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedFieldErrorSt
 import lk.ijse.CropMonitoringSystemBackend.dto.CropStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.FieldStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
+import lk.ijse.CropMonitoringSystemBackend.exeption.CropNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.CropService;
@@ -70,7 +71,7 @@ public class CropController {
             }
             cropService.deleteCrop(CropCode);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (FieldNotFoundException e){
+        }catch (CropNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -103,7 +104,7 @@ public class CropController {
             //call service layer
             cropService.updateCrop(cropCode,cropDTO);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (FieldNotFoundException e){
+        }catch (CropNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -115,7 +116,7 @@ public class CropController {
     public CropStatus getSelectedCropByName(@PathVariable("name") String name) {
         try {
             return cropService.getSelectedCropByName(name);
-        } catch (FieldNotFoundException e) {
+        } catch (CropNotFoundException e) {
             e.printStackTrace();
             return new SelectedCropErrorStatus(1, "Crop Not Found");
         }
