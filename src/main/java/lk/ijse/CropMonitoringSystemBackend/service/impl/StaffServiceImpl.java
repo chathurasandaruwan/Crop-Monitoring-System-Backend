@@ -62,7 +62,7 @@ public class StaffServiceImpl implements StaffService {
             staffEntity.get().setAddress3(staffDTO.getAddress3());
             staffEntity.get().setAddress4(staffDTO.getAddress4());
             staffEntity.get().setAddress5(staffDTO.getAddress5());
-            staffEntity.get().setContactNo(staffDTO.getContact_no());
+            staffEntity.get().setContactNo(staffDTO.getContactNo());
             staffEntity.get().setEmail(staffDTO.getEmail());
             staffEntity.get().setRole(staffDTO.getRole());
         }
