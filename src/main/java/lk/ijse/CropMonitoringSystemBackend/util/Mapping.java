@@ -48,4 +48,8 @@ public class Mapping {
     public List<StaffDTO> toStaffDTOList(List<StaffEntity> all) {
         return mapper.map(all,new TypeToken<List<StaffDTO>>(){}.getType());
     }
+
+    public StaffDTO toStaffDTO(StaffEntity staffEntity) {
+        return mapper.map(staffEntity,StaffDTO.class);
+    }
 }

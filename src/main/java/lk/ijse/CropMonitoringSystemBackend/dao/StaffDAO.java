@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface StaffDAO extends JpaRepository<StaffEntity, String> {
-
+    Optional<StaffEntity> findByFirstName(String name);
 }
 

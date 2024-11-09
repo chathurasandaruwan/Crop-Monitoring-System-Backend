@@ -68,4 +68,14 @@ public class StaffServiceImpl implements StaffService {
         }
     }
 
+    @Override
+    public StaffDTO getSelectedStaffMemberByName(String name) {
+       Optional<StaffEntity>existStaff = staffDAO.findByFirstName(name);
+        if (!existStaff.isPresent()){
+            throw new StaffNotFoundException("Staff Not Found");
+        }else {
+            return mapping.toStaffDTO(existStaff.get());
+        }
+    }
+
 }
