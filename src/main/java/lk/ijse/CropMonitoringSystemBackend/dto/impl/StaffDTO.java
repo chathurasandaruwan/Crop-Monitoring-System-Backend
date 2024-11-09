@@ -1,5 +1,6 @@
 package lk.ijse.CropMonitoringSystemBackend.dto.impl;
 
+import lk.ijse.CropMonitoringSystemBackend.dto.StaffStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.SuperDTO;
 import lk.ijse.CropMonitoringSystemBackend.enums.Designation;
 import lk.ijse.CropMonitoringSystemBackend.enums.Gender;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StaffDTO implements SuperDTO {
+public class StaffDTO implements StaffStatus {
     private String id;
     private String firstName;
     private String lastName;

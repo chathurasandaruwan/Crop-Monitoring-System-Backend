@@ -21,6 +21,7 @@ import java.util.List;
 public class StaffEntity implements SuperEntity {
     @Id
     private String id;
+    @Column(unique = true)
     private String firstName;
     private String lastName;
     private Designation designation;

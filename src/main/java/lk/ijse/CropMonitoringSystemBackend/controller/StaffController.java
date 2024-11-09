@@ -1,7 +1,12 @@
 package lk.ijse.CropMonitoringSystemBackend.controller;
 
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedCropErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedStaffErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.CropStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.StaffStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.StaffNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.StaffService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
@@ -67,6 +72,15 @@ public class StaffController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public StaffStatus getSelectedStaffMemberByName(@PathVariable("name") String name) {
+        try {
+            return service.getSelectedStaffMemberByName(name);
+        } catch (StaffNotFoundException e) {
+            e.printStackTrace();
+            return new SelectedStaffErrorStatus(1, "Staff Not Found");
         }
     }
 }
