@@ -28,6 +28,7 @@ public class StaffController {
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO){
         try {
             staffDTO.setId(AppUtil.generateStaffId());
+            System.out.println(staffDTO.getDob());
             // call service layer
             service.saveStaff(staffDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);

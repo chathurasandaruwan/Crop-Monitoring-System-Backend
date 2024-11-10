@@ -25,6 +25,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public void saveStaff(StaffDTO staffDTO) {
         StaffEntity saveStaff = staffDAO.save(mapping.toStaffEntity(staffDTO));
+        System.out.println(saveStaff.getDob());
         if (saveStaff==null){
             throw new DataPersistException("Staff not Saved");
         }
@@ -56,7 +57,7 @@ public class StaffServiceImpl implements StaffService {
             staffEntity.get().setDesignation(staffDTO.getDesignation());
             staffEntity.get().setGender(staffDTO.getGender());
             staffEntity.get().setJoinedDate(staffDTO.getJoinedDate());
-            staffEntity.get().setDOB(staffDTO.getDOB());
+            staffEntity.get().setDob(staffDTO.getDob());
             staffEntity.get().setAddress1(staffDTO.getAddress1());
             staffEntity.get().setAddress2(staffDTO.getAddress2());
             staffEntity.get().setAddress3(staffDTO.getAddress3());
