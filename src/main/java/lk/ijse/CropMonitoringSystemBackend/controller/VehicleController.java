@@ -1,5 +1,7 @@
 package lk.ijse.CropMonitoringSystemBackend.controller;
 
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedVehicleErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.VehicleStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.VehicleDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
@@ -69,6 +71,15 @@ public class VehicleController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/{licensePlateNum}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public VehicleStatus getSelectedVehicleByLicensePlateNum(@PathVariable("licensePlateNum") String licensePlateNum) {
+        try {
+            return vehicleService.getSelectedVehicleByLicensePlateNum(licensePlateNum);
+        } catch (VehicleNotFoundException e) {
+            e.printStackTrace();
+            return new SelectedVehicleErrorStatus(1,"Vehicle Not Found");
         }
     }
 
