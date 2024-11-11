@@ -32,6 +32,7 @@ public class StaffDTO implements StaffStatus {
     private String email;
     private Role role;
     private List<FieldDTO> fieldDTOS;
+    private List<VehicleDTO> vehicleDTOS;
 
 //    TODO:field and vehicle list need added
 

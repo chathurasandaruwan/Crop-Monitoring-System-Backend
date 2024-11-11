@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VehicleDTO implements SuperDTO {
     private String vehicle_code;
-    private String license_plate_num;
+    private String licensePlateNum;
     private String category;
     private String fuel_type;
     private String status;
-    private StaffDTO staff;
     private String Remarks;
+    private String staffId;
 }

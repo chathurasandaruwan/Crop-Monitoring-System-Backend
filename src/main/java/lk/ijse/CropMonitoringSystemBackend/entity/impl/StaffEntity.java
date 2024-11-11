@@ -40,5 +40,7 @@ public class StaffEntity implements SuperEntity {
     private Role role;
     @ManyToMany(mappedBy = "staffs", cascade = CascadeType.ALL)
     private List<FieldEntity> fieldEntities;
+    @OneToMany(mappedBy = "staff")
+    private List<VehicleEntity> vehicles;
 
 }
