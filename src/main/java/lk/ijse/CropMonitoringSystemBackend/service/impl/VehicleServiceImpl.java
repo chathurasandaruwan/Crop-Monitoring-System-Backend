@@ -2,6 +2,7 @@ package lk.ijse.CropMonitoringSystemBackend.service.impl;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.CropMonitoringSystemBackend.dao.VehicleDAO;
+import lk.ijse.CropMonitoringSystemBackend.dto.VehicleStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.VehicleDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.VehicleEntity;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
@@ -58,6 +59,16 @@ public class VehicleServiceImpl implements VehicleService {
             vehicleEntity.get().setFuel_type(vehicleDTO.getFuel_type());
             vehicleEntity.get().setStatus(vehicleDTO.getStatus());
             vehicleEntity.get().setRemarks(vehicleDTO.getRemarks());
+        }
+    }
+
+    @Override
+    public VehicleDTO getSelectedVehicleByLicensePlateNum(String licensePlateNum) {
+        Optional<VehicleEntity> vehicleEntity = vehicleDAO.findByLicensePlateNum(licensePlateNum);
+        if (!vehicleEntity.isPresent()){
+            throw new VehicleNotFoundException("Vehicle not Found");
+        }else {
+            return mapping.toVehicleDTO(vehicleEntity.get());
         }
     }
 }

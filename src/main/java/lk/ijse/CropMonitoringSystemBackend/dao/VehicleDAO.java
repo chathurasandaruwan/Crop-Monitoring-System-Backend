@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface VehicleDAO extends JpaRepository<VehicleEntity, String> {
 
+    Optional<VehicleEntity> findByLicensePlateNum(String licensePlateNum);
 }
 
