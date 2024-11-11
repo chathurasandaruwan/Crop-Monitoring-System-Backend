@@ -16,4 +16,8 @@ public class AppUtil {
     public static String imageToBase64(byte[] image){
         return Base64.getEncoder().encodeToString(image);
     }
+
+    public static String generateVehicleCode() {
+        return "VEHICLE-"+ UUID.randomUUID();
+    }
 }
