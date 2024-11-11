@@ -59,4 +59,8 @@ public class Mapping {
     public VehicleEntity toVehicleEntity(VehicleDTO vehicleDTO) {
         return mapper.map(vehicleDTO,VehicleEntity.class);
     }
+
+    public List<VehicleDTO> toVehicleDTOList(List<VehicleEntity> allVehicle) {
+        return mapper.map(allVehicle,new TypeToken<List<VehicleDTO>>(){}.getType());
+    }
 }

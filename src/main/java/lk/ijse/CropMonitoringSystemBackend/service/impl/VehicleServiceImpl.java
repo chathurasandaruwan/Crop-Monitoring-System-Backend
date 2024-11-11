@@ -10,6 +10,8 @@ import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class VehicleServiceImpl implements VehicleService {
@@ -25,5 +27,11 @@ public class VehicleServiceImpl implements VehicleService {
         if (savedVehicle==null){
             throw new DataPersistException("Vehicle not Saved");
         }
+    }
+
+    @Override
+    public List<VehicleDTO> getAllVehicle() {
+        List<VehicleEntity> allVehicle = vehicleDAO.findAll();
+        return mapping.toVehicleDTOList(allVehicle);
     }
 }
