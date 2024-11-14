@@ -1,6 +1,7 @@
 package lk.ijse.CropMonitoringSystemBackend.service;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldStaffDTO;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface FieldService {
     void deleteField(String fieldCode);
 
     FieldDTO getSelectedFieldByName(String name);
+
+    void saveFieldStaff(FieldStaffDTO fieldStaffDTO);
 }

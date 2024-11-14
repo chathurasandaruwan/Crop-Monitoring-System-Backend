@@ -4,10 +4,12 @@ import jakarta.transaction.Transactional;
 import lk.ijse.CropMonitoringSystemBackend.dao.FieldDAO;
 import lk.ijse.CropMonitoringSystemBackend.dao.StaffDAO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldStaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.FieldEntity;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.StaffEntity;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.StaffNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.FieldService;
 import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +72,25 @@ public class FieldServiceImpl implements FieldService {
         }else {
             return mapping.toFieldDTO(existField.get());
         }
+    }
+
+    @Override
+    public void saveFieldStaff(FieldStaffDTO fieldStaffDTO) {
+        Optional<FieldEntity> fieldOpt = fieldDAO.findById(fieldStaffDTO.getField_code());
+        Optional<StaffEntity> staffOpt = staffDAO.findById(fieldStaffDTO.getStaffId());
+        if(!fieldOpt.isPresent()) {
+            throw new FieldNotFoundException(fieldStaffDTO.getField_code() + " : Field Does Not Exist");
+        } else if(!staffOpt.isPresent()) {
+            throw new StaffNotFoundException(fieldStaffDTO.getStaffId() + " : Staff Does Not Exist");
+        }
+        FieldEntity field = fieldOpt.get();
+        StaffEntity staff = staffOpt.get();
+        if (field.getStaffs().contains(staff)) {
+            throw new DataPersistException(fieldStaffDTO.getField_code() + " : Field Already Have This Staff : " + fieldStaffDTO.getStaffId());
+        }
+        field.getStaffs().add(staff);
+        staff.getFields().add(field);
+        fieldDAO.save(field);
     }
 
 

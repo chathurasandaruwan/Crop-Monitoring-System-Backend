@@ -6,6 +6,7 @@ import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldStaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.StaffNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.FieldService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
 import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
@@ -138,9 +139,10 @@ public class FieldController {
         try {
             fieldService.saveFieldStaff(fieldStaffDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (DataPersistException e){
+        }catch (FieldNotFoundException | DataPersistException | StaffNotFoundException e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
