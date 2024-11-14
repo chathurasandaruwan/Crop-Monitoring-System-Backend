@@ -17,4 +17,6 @@ public interface FieldService {
     FieldDTO getSelectedFieldByName(String name);
 
     void saveFieldStaff(FieldStaffDTO fieldStaffDTO);
+
+    void deleteFieldStaff(String fieldCode, String staffId);
 }

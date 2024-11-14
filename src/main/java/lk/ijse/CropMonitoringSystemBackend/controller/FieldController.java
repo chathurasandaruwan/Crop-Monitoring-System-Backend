@@ -146,5 +146,17 @@ public class FieldController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @DeleteMapping("/fieldstaff")
+    public ResponseEntity<Void> deleteFieldStaff(@RequestParam("fieldCode") String fieldCode, @RequestParam("staffId") String staffId) {
+        try {
+            fieldService.deleteFieldStaff(fieldCode, staffId);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (FieldNotFoundException | DataPersistException | StaffNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
