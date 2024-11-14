@@ -43,7 +43,7 @@ public class EquipmentController {
             if (!RegexProcess.equipmentIdMatcher(equipment_id)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-//            service.deleteStaff(staff_id);
+            equipmentService.deleteEquipment(equipment_id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (StaffNotFoundException e){
             e.printStackTrace();

@@ -4,13 +4,17 @@ import jakarta.transaction.Transactional;
 import lk.ijse.CropMonitoringSystemBackend.dao.EquipmentDAO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.EquipmentDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.EquipmentEntity;
+import lk.ijse.CropMonitoringSystemBackend.entity.impl.StaffEntity;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.EquipmentNotFoundException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.StaffNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.EquipmentService;
 import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -31,5 +35,15 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public List<EquipmentDTO> getAllEquipment() {
         return mapping.toEquipmentDTOList(equipmentDAO.findAll());
+    }
+
+    @Override
+    public void deleteEquipment(String equipmentId) {
+        Optional<EquipmentEntity> equipmentEntity = equipmentDAO.findById(equipmentId);
+        if (!equipmentEntity.isPresent()){
+            throw new EquipmentNotFoundException("Equipment not Found");
+        }else {
+            equipmentDAO.deleteById(equipmentId);
+        }
     }
 }
