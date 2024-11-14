@@ -66,4 +66,8 @@ public class Mapping {
     public EquipmentEntity toEquipmentEntity(EquipmentDTO equipmentDTO) {
         return mapper.map(equipmentDTO, EquipmentEntity.class);
     }
+
+    public List<EquipmentDTO> toEquipmentDTOList(List<EquipmentEntity> all) {
+        return mapper.map(all,new TypeToken<List<EquipmentDTO>>(){}.getType());
+    }
 }

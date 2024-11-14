@@ -10,6 +10,8 @@ import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -24,5 +26,10 @@ public class EquipmentServiceImpl implements EquipmentService {
         if (equipmentEntity==null){
             throw new DataPersistException("Equipment not Saved");
         }
+    }
+
+    @Override
+    public List<EquipmentDTO> getAllEquipment() {
+        return mapping.toEquipmentDTOList(equipmentDAO.findAll());
     }
 }
