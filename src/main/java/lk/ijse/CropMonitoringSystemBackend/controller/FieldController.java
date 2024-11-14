@@ -30,7 +30,8 @@ public class FieldController {
             @RequestPart("location.y") String y,
             @RequestPart("extent_size") String extentSize,
             @RequestPart("image1") MultipartFile image1,
-            @RequestPart("image2") MultipartFile image2
+            @RequestPart("image2") MultipartFile image2,
+            @RequestPart("staffIds") List<String> staffIdList
     ) {
         //generate field code
         String fieldCode = AppUtil.generateFieldCode();
@@ -38,6 +39,10 @@ public class FieldController {
         String image1Base64 ="";
         String image2Base64 ="";
 
+//        List<String> staffIdList = List.of(staffIds);
+/*        if (staffIdList.size() == 0) {
+            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+        }*/
         // Create and set Point object
         Point point = new Point();
         point.setLocation(Double.valueOf(x),Double.valueOf(y));
@@ -52,6 +57,7 @@ public class FieldController {
             fieldDTO.setImage1(image1Base64 );
             fieldDTO.setImage2(image2Base64);
             fieldDTO.setExtent_size(Double.valueOf(extentSize));
+            fieldDTO.setStaffIds(staffIdList);
 
             //call service layer
             fieldService.saveField(fieldDTO);
@@ -74,6 +80,7 @@ public class FieldController {
             @RequestPart("extent_size") String extentSize,
             @RequestPart("image1") MultipartFile image1,
             @RequestPart("image2") MultipartFile image2,
+            @RequestPart("staffIds") List<String> staffIds,
             @PathVariable String fieldCode){
         //image ---> Base64
         String image1Base64 ="";
@@ -91,6 +98,7 @@ public class FieldController {
             fieldDTO.setImage1(image1Base64);
             fieldDTO.setImage2(image2Base64);
             fieldDTO.setExtent_size(Double.valueOf(extentSize));
+            fieldDTO.setStaffIds(staffIds);
 
             if(!RegexProcess.FieldCodeMatcher(fieldCode) || fieldDTO == null){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

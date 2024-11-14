@@ -39,7 +39,7 @@ public class StaffEntity implements SuperEntity {
     private String email;
     private Role role;
     @ManyToMany(mappedBy = "staffs", cascade = CascadeType.ALL)
-    private List<FieldEntity> fieldEntities;
+    private List<FieldEntity> fields;
     @OneToMany(mappedBy = "staff")
     private List<VehicleEntity> vehicles;
 

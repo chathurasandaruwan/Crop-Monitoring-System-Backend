@@ -2,8 +2,10 @@ package lk.ijse.CropMonitoringSystemBackend.service.impl;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.CropMonitoringSystemBackend.dao.FieldDAO;
+import lk.ijse.CropMonitoringSystemBackend.dao.StaffDAO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.FieldEntity;
+import lk.ijse.CropMonitoringSystemBackend.entity.impl.StaffEntity;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.FieldService;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class FieldServiceImpl implements FieldService {
     @Autowired
     private FieldDAO fieldDAO;
+    @Autowired
+    private StaffDAO staffDAO;
     @Autowired
     private Mapping mapping;
     @Override
@@ -40,11 +44,13 @@ public class FieldServiceImpl implements FieldService {
         if (!tmpField.isPresent()){
             throw new FieldNotFoundException("Field Not Found");
         }else {
+            List<StaffEntity> staffEntities = staffDAO.findAllById(fieldDTO.getStaffIds());
             tmpField.get().setFieldName(fieldDTO.getFieldName());
             tmpField.get().setLocation(fieldDTO.getLocation());
             tmpField.get().setExtent_size(fieldDTO.getExtent_size());
             tmpField.get().setImage1(fieldDTO.getImage1());
             tmpField.get().setImage2(fieldDTO.getImage2());
+            tmpField.get().setStaffs(staffEntities);
         }
 
     }
