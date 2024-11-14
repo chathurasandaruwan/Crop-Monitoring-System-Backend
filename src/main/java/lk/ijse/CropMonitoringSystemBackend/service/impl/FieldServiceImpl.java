@@ -44,13 +44,11 @@ public class FieldServiceImpl implements FieldService {
         if (!tmpField.isPresent()){
             throw new FieldNotFoundException("Field Not Found");
         }else {
-            List<StaffEntity> staffEntities = staffDAO.findAllById(fieldDTO.getStaffIds());
             tmpField.get().setFieldName(fieldDTO.getFieldName());
             tmpField.get().setLocation(fieldDTO.getLocation());
             tmpField.get().setExtent_size(fieldDTO.getExtent_size());
             tmpField.get().setImage1(fieldDTO.getImage1());
             tmpField.get().setImage2(fieldDTO.getImage2());
-            tmpField.get().setStaffs(staffEntities);
         }
 
     }
@@ -73,5 +71,6 @@ public class FieldServiceImpl implements FieldService {
             return mapping.toFieldDTO(existField.get());
         }
     }
+
 
 }

@@ -3,6 +3,7 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedFieldErrorStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.FieldStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldStaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.FieldNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.FieldService;
@@ -30,8 +31,7 @@ public class FieldController {
             @RequestPart("location.y") String y,
             @RequestPart("extent_size") String extentSize,
             @RequestPart("image1") MultipartFile image1,
-            @RequestPart("image2") MultipartFile image2,
-            @RequestPart("staffIds") List<String> staffIdList
+            @RequestPart("image2") MultipartFile image2
     ) {
         //generate field code
         String fieldCode = AppUtil.generateFieldCode();
@@ -39,10 +39,6 @@ public class FieldController {
         String image1Base64 ="";
         String image2Base64 ="";
 
-//        List<String> staffIdList = List.of(staffIds);
-/*        if (staffIdList.size() == 0) {
-            return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
-        }*/
         // Create and set Point object
         Point point = new Point();
         point.setLocation(Double.valueOf(x),Double.valueOf(y));
@@ -57,7 +53,6 @@ public class FieldController {
             fieldDTO.setImage1(image1Base64 );
             fieldDTO.setImage2(image2Base64);
             fieldDTO.setExtent_size(Double.valueOf(extentSize));
-            fieldDTO.setStaffIds(staffIdList);
 
             //call service layer
             fieldService.saveField(fieldDTO);
@@ -80,7 +75,6 @@ public class FieldController {
             @RequestPart("extent_size") String extentSize,
             @RequestPart("image1") MultipartFile image1,
             @RequestPart("image2") MultipartFile image2,
-            @RequestPart("staffIds") List<String> staffIds,
             @PathVariable String fieldCode){
         //image ---> Base64
         String image1Base64 ="";
@@ -98,7 +92,6 @@ public class FieldController {
             fieldDTO.setImage1(image1Base64);
             fieldDTO.setImage2(image2Base64);
             fieldDTO.setExtent_size(Double.valueOf(extentSize));
-            fieldDTO.setStaffIds(staffIds);
 
             if(!RegexProcess.FieldCodeMatcher(fieldCode) || fieldDTO == null){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -138,6 +131,17 @@ public class FieldController {
         } catch (FieldNotFoundException e) {
             e.printStackTrace();
             return new SelectedFieldErrorStatus(1, "Field Not Found");
+        }
+    }
+    @PostMapping(value = "/fieldstaff", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> saveFieldStaff(@RequestBody FieldStaffDTO fieldStaffDTO) {
+        try {
+            fieldService.saveFieldStaff(fieldStaffDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (DataPersistException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
