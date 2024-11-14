@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class FieldStaffDTO implements FieldStatus {
     private String field_code;
-    private String StaffId;
+    private String staffId;
 
 }

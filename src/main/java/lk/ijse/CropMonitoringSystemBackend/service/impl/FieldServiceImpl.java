@@ -78,6 +78,7 @@ public class FieldServiceImpl implements FieldService {
     public void saveFieldStaff(FieldStaffDTO fieldStaffDTO) {
         Optional<FieldEntity> fieldOpt = fieldDAO.findById(fieldStaffDTO.getField_code());
         Optional<StaffEntity> staffOpt = staffDAO.findById(fieldStaffDTO.getStaffId());
+        System.out.println("Save Execution !!!");
         if(!fieldOpt.isPresent()) {
             throw new FieldNotFoundException(fieldStaffDTO.getField_code() + " : Field Does Not Exist");
         } else if(!staffOpt.isPresent()) {

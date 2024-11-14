@@ -34,6 +34,5 @@ public class StaffDTO implements StaffStatus {
     private List<FieldDTO> fields;
     private List<VehicleDTO> vehicles;
 
-//    TODO:field and vehicle list need added
 
 }

@@ -134,19 +134,21 @@ public class FieldController {
             return new SelectedFieldErrorStatus(1, "Field Not Found");
         }
     }
-    @PostMapping(value = "/fieldstaff", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/saveFieldStaff", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveFieldStaff(@RequestBody FieldStaffDTO fieldStaffDTO) {
         try {
+            System.out.println(fieldStaffDTO.getStaffId());
             fieldService.saveFieldStaff(fieldStaffDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (FieldNotFoundException | DataPersistException | StaffNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @DeleteMapping("/fieldstaff")
+    @DeleteMapping("/DeleteFieldStaff")
     public ResponseEntity<Void> deleteFieldStaff(@RequestParam("fieldCode") String fieldCode, @RequestParam("staffId") String staffId) {
         try {
             fieldService.deleteFieldStaff(fieldCode, staffId);
