@@ -38,4 +38,7 @@ public class FieldEntity implements SuperEntity {
             inverseJoinColumns = @JoinColumn(name = "staff_id")
     )
     private List<StaffEntity> staffs;
+
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
+    private List<EquipmentEntity> equipment;
 }
