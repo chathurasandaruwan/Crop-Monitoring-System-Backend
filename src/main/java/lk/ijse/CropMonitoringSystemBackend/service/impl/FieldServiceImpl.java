@@ -93,5 +93,21 @@ public class FieldServiceImpl implements FieldService {
         fieldDAO.save(field);
     }
 
+    @Override
+    public void deleteFieldStaff(String fieldCode, String staffId) {
+        Optional<FieldEntity> fieldOpt = fieldDAO.findById(fieldCode);
+        Optional<StaffEntity> staffOpt = staffDAO.findById(staffId);
+        if(!fieldOpt.isPresent()) {
+            throw new FieldNotFoundException(fieldCode + " : Field Does Not Exist");
+        } else if(!staffOpt.isPresent()) {
+            throw new StaffNotFoundException(staffId + " : Staff Does Not Exist");
+        }
+        FieldEntity field = fieldOpt.get();
+        StaffEntity staff = staffOpt.get();
+        field.getStaffs().remove(staff);
+        staff.getFields().remove(field);
+        fieldDAO.save(field);
+    }
+
 
 }
