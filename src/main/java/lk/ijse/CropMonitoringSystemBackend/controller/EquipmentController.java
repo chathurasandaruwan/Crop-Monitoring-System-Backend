@@ -3,6 +3,7 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.EquipmentDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.EquipmentNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.exeption.StaffNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.EquipmentService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
@@ -45,7 +46,23 @@ public class EquipmentController {
             }
             equipmentService.deleteEquipment(equipment_id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (StaffNotFoundException e){
+        }catch (EquipmentNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping(value = "/{equipment_id}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateEquipment(@RequestBody EquipmentDTO equipmentDTO, @PathVariable String equipment_id){
+        try {
+            if (!RegexProcess.equipmentIdMatcher(equipment_id)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            equipmentService.updateEquipment(equipment_id,equipmentDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (EquipmentNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
