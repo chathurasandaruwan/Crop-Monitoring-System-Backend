@@ -10,6 +10,7 @@ import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 @Transactional
 public class EquipmentServiceImpl implements EquipmentService {
