@@ -1,9 +1,6 @@
 package lk.ijse.CropMonitoringSystemBackend.controller;
 
-import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
-import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
-import lk.ijse.CropMonitoringSystemBackend.dto.impl.MonitoringLogDTO;
-import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.*;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.service.LogService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
@@ -11,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -65,5 +59,10 @@ public class LogController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(value = "/getAllLog", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MonitoringLogDTO> getAllLog() {
+        return logService.getAllLogs();
+    }
+
 
 }
