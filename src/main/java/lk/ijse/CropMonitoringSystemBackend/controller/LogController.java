@@ -1,0 +1,63 @@
+package lk.ijse.CropMonitoringSystemBackend.controller;
+
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
+import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("api/v1/log")
+public class LogController {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> saveLog(@RequestParam("date") String date,
+                                        @RequestParam("details") String details,
+                                        @RequestParam("image") MultipartFile image,
+                                        @RequestParam("logFields") List<String> logFields,
+                                        @RequestParam("logCrops")List<String> logCrops,
+                                        @RequestParam("logStaff")List<String> logStaff) {
+        String logCode = AppUtil.generateLogCode();
+        String imageBase64 = "";
+        try {
+            imageBase64=AppUtil.imageToBase64(image.getBytes());
+            List<FieldDTO> fieldDTOS = new ArrayList<>();
+            for (String logField : logFields) {
+                FieldDTO fieldDTO = new FieldDTO();
+                fieldDTO.setField_code(logField);
+                fieldDTOS.add(fieldDTO);
+            }
+            List<CropDTO> cropDTOS = new ArrayList<>();
+            for (String logCrop : logCrops) {
+                CropDTO cropDTO = new CropDTO();
+                cropDTO.setCrop_code(logCrop);
+                cropDTOS.add(cropDTO);
+            }
+            List<StaffDTO> staffDTOS = new ArrayList<>();
+            for (String logStaff1 : logStaff) {
+                StaffDTO staffDTO = new StaffDTO();
+                staffDTO.setId(logStaff1);
+                staffDTOS.add(staffDTO);
+            }
+            //TODO:call service layer
+
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (DataPersistException e) {
+            throw new DataPersistException(e.getMessage());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+}
