@@ -10,6 +10,8 @@ import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -24,5 +26,10 @@ public class LogServiceImpl implements LogService {
         if (savedEntity==null){
             throw new DataPersistException("Log not Saved");
         }
+    }
+
+    @Override
+    public List<MonitoringLogDTO> getAllLogs() {
+        return mapping.asLogDTOList(logDAO.findAll());
     }
 }

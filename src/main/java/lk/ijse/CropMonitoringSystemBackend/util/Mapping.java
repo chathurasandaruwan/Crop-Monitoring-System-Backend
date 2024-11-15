@@ -80,4 +80,7 @@ public class Mapping {
         return mapper.map(monitoringLogDTO,MonitoringLogEntity.class);
     }
 
+    public List<MonitoringLogDTO> asLogDTOList(List<MonitoringLogEntity> all) {
+        return mapper.map(all,new TypeToken<List<MonitoringLogDTO>>(){}.getType());
+    }
 }
