@@ -17,6 +17,7 @@ public class EquipmentEntity implements SuperDTO {
     @Column(unique = true)
     private String name;
     private String status;
+    private String type;
     @ManyToOne
     @JoinColumn(name = "staff_id")
     StaffEntity staff;

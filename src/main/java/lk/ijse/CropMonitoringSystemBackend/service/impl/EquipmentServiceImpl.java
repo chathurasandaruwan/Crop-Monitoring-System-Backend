@@ -2,6 +2,8 @@ package lk.ijse.CropMonitoringSystemBackend.service.impl;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.CropMonitoringSystemBackend.dao.EquipmentDAO;
+import lk.ijse.CropMonitoringSystemBackend.dao.FieldDAO;
+import lk.ijse.CropMonitoringSystemBackend.dao.StaffDAO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.EquipmentDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.EquipmentEntity;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.StaffEntity;
@@ -22,6 +24,10 @@ import java.util.Optional;
 public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private EquipmentDAO equipmentDAO;
+    @Autowired
+    private StaffDAO staffDAO;
+    @Autowired
+    private FieldDAO fieldDAO;
     @Autowired
     private Mapping mapping;
     @Override
@@ -44,6 +50,21 @@ public class EquipmentServiceImpl implements EquipmentService {
             throw new EquipmentNotFoundException("Equipment not Found");
         }else {
             equipmentDAO.deleteById(equipmentId);
+        }
+    }
+
+    @Override
+    public void updateEquipment(String equipmentId, EquipmentDTO equipmentDTO) {
+        Optional<EquipmentEntity> equipmentEntity = equipmentDAO.findById(equipmentId);
+        if (!equipmentEntity.isPresent()){
+            throw new EquipmentNotFoundException("Equipment not Found");
+        }else {
+            equipmentEntity.get().setStatus(equipmentDTO.getStatus());
+            equipmentEntity.get().setName(equipmentDTO.getName());
+            equipmentEntity.get().setType(equipmentDTO.getType());
+            equipmentEntity.get().setStatus(equipmentDTO.getStatus());
+            equipmentEntity.get().setStaff(staffDAO.getReferenceById(equipmentDTO.getStaff()));
+            equipmentEntity.get().setField(fieldDAO.getReferenceById(equipmentDTO.getField()));
         }
     }
 }
