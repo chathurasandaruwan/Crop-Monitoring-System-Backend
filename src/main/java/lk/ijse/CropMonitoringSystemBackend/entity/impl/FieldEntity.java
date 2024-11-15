@@ -41,4 +41,6 @@ public class FieldEntity implements SuperEntity {
 
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
     private List<EquipmentEntity> equipment;
+    @ManyToMany(mappedBy = "fields", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<MonitoringLogEntity> logs;
 }
