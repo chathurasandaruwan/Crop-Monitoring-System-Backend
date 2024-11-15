@@ -70,4 +70,8 @@ public class Mapping {
     public List<EquipmentDTO> toEquipmentDTOList(List<EquipmentEntity> all) {
         return mapper.map(all,new TypeToken<List<EquipmentDTO>>(){}.getType());
     }
+
+    public EquipmentDTO toEquipmentDTO(EquipmentEntity equipmentEntity) {
+        return mapper.map(equipmentEntity,EquipmentDTO.class);
+    }
 }

@@ -20,8 +20,8 @@ public class EquipmentEntity implements SuperDTO {
     private String type;
     @ManyToOne
     @JoinColumn(name = "staff_id")
-    StaffEntity staff;
+    private StaffEntity staff;
     @ManyToOne
     @JoinColumn(name = "field_id")
-    FieldEntity field;
+    private FieldEntity field;
 }

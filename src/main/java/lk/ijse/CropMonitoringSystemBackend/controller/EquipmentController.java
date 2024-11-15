@@ -27,6 +27,7 @@ public class EquipmentController {
     private EquipmentService equipmentService;
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveEquipment(@RequestBody EquipmentDTO equipmentDTO){
+        System.out.println("Staff from save EQUIPMENT :"+equipmentDTO.getStaffId());
         try {
             equipmentDTO.setEquipment_id(AppUtil.generateEquipmentId());
             // call service layer
