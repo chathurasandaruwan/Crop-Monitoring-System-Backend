@@ -11,6 +11,7 @@ import lk.ijse.CropMonitoringSystemBackend.dto.impl.MonitoringLogDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.entity.impl.MonitoringLogEntity;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.LogNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.LogService;
 import lk.ijse.CropMonitoringSystemBackend.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -62,5 +64,15 @@ public class LogServiceImpl implements LogService {
     @Override
     public List<MonitoringLogDTO> getAllLogs() {
         return mapping.asLogDTOList(logDAO.findAll());
+    }
+
+    @Override
+    public void deleteLog(String tempId) {
+        Optional<MonitoringLogEntity> logEntity = logDAO.findByTempId(tempId);
+        if (logEntity.isPresent()){
+            logDAO.delete(logEntity.get());
+        }else {
+            throw new LogNotFoundException("Log Not Found");
+        }
     }
 }

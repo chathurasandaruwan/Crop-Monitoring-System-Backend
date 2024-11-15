@@ -2,6 +2,7 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.*;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.exeption.LogNotFoundException;
 import lk.ijse.CropMonitoringSystemBackend.service.LogService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
 import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
@@ -57,7 +58,7 @@ public class LogController {
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (DataPersistException e) {
-            throw new DataPersistException(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -75,6 +76,8 @@ public class LogController {
             }
             logService.deleteLog(tempId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (LogNotFoundException e) {
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
