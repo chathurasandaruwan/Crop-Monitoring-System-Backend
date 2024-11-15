@@ -1,5 +1,9 @@
 package lk.ijse.CropMonitoringSystemBackend.controller;
 
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedEquipmentErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.customStatusCode.SelectedStaffErrorStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.EquipmentStatus;
+import lk.ijse.CropMonitoringSystemBackend.dto.StaffStatus;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.EquipmentDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
@@ -68,6 +72,15 @@ public class EquipmentController {
         }catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping(value = "/{name}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public EquipmentStatus getSelectedEquipmentByName(@PathVariable("name") String name) {
+        try {
+            return equipmentService.getSelectedEquipmentByName(name);
+        } catch (EquipmentNotFoundException e) {
+            e.printStackTrace();
+            return new SelectedEquipmentErrorStatus(1, "Equipment Not Found");
         }
     }
 }
