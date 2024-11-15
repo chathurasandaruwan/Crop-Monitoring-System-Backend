@@ -2,9 +2,12 @@ package lk.ijse.CropMonitoringSystemBackend.controller;
 
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.CropDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.FieldDTO;
+import lk.ijse.CropMonitoringSystemBackend.dto.impl.MonitoringLogDTO;
 import lk.ijse.CropMonitoringSystemBackend.dto.impl.StaffDTO;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
+import lk.ijse.CropMonitoringSystemBackend.service.LogService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/log")
 public class LogController {
+    @Autowired
+    private LogService logService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveLog(@RequestParam("date") String date,
+    public ResponseEntity<Void> saveLog(@RequestParam("date") Date date,
                                         @RequestParam("details") String details,
                                         @RequestParam("image") MultipartFile image,
                                         @RequestParam("logFields") List<String> logFields,
@@ -49,8 +55,8 @@ public class LogController {
                 staffDTO.setId(logStaff1);
                 staffDTOS.add(staffDTO);
             }
-            //TODO:call service layer
-
+            //call service layer
+            logService.saveLog(new MonitoringLogDTO(logCode, date, details, imageBase64, fieldDTOS, cropDTOS, staffDTOS));
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (DataPersistException e) {
