@@ -74,4 +74,10 @@ public class Mapping {
     public EquipmentDTO toEquipmentDTO(EquipmentEntity equipmentEntity) {
         return mapper.map(equipmentEntity,EquipmentDTO.class);
     }
+
+//    for log mapping
+    public MonitoringLogEntity toLogEntity(MonitoringLogDTO monitoringLogDTO) {
+        return mapper.map(monitoringLogDTO,MonitoringLogEntity.class);
+    }
+
 }
