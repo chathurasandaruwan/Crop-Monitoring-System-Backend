@@ -32,4 +32,10 @@ public class RegexProcess {
         Pattern regexPattern = Pattern.compile(regexForCropCode);
         return regexPattern.matcher(equipmentId).matches();
     }
+
+    public static boolean logCodeMatcher(String tempId) {
+        String regexForCropCode = "^LOG-\\d{2}$";
+        Pattern regexPattern = Pattern.compile(regexForCropCode);
+        return regexPattern.matcher(tempId).matches();
+    }
 }

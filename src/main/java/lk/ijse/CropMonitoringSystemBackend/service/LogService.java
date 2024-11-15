@@ -8,4 +8,6 @@ public interface LogService {
     void saveLog(MonitoringLogDTO monitoringLogDTO);
 
     List<MonitoringLogDTO> getAllLogs();
+
+    void deleteLog(String tempId);
 }

@@ -4,6 +4,7 @@ import lk.ijse.CropMonitoringSystemBackend.dto.impl.*;
 import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.service.LogService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
+import lk.ijse.CropMonitoringSystemBackend.util.RegexProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -64,6 +65,20 @@ public class LogController {
     @GetMapping(value = "/getAllLog", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MonitoringLogDTO> getAllLog() {
         return logService.getAllLogs();
+    }
+
+    @DeleteMapping(value = "/{tempId}")
+    public ResponseEntity<Void> deleteLog(@PathVariable("tempId") String tempId) {
+        try {
+            if (!RegexProcess.logCodeMatcher(tempId)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            logService.deleteLog(tempId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
