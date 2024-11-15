@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MonitoringLogDTO implements SuperDTO {
     private String log_code;
+    private String tempId;
     private Date date;
     private String details;
     private String image;

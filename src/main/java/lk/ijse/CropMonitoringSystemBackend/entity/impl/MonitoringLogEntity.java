@@ -18,6 +18,8 @@ public class MonitoringLogEntity implements SuperEntity {
 
     @Id
     private String log_code;
+    @Column(unique = true)
+    private String tempId;
     private Date date;
     private String details;
     @Column(columnDefinition = "LONGTEXT")

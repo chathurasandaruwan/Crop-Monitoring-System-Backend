@@ -5,6 +5,7 @@ import lk.ijse.CropMonitoringSystemBackend.exeption.DataPersistException;
 import lk.ijse.CropMonitoringSystemBackend.service.LogService;
 import lk.ijse.CropMonitoringSystemBackend.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,13 @@ public class LogController {
     @Autowired
     private LogService logService;
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> saveLog(@RequestParam("date") Date date,
+    public ResponseEntity<Void> saveLog(@RequestParam("tempId") String tempId,
+                                        @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd")Date date,
                                         @RequestParam("details") String details,
                                         @RequestParam("image") MultipartFile image,
-                                        @RequestParam("logFields") List<String> logFields,
-                                        @RequestParam("logCrops")List<String> logCrops,
-                                        @RequestParam("logStaff")List<String> logStaff) {
+                                        @RequestParam(value = "logFields", required = false, defaultValue = "") List<String> logFields,
+                                        @RequestParam(value = "logCrops", required = false, defaultValue = "")List<String> logCrops,
+                                        @RequestParam(value = "logStaff", required = false, defaultValue = "")List<String> logStaff) {
         String logCode = AppUtil.generateLogCode();
         String imageBase64 = "";
         try {
@@ -50,7 +52,7 @@ public class LogController {
                 staffDTOS.add(staffDTO);
             }
             //call service layer
-            logService.saveLog(new MonitoringLogDTO(logCode, date, details, imageBase64, fieldDTOS, cropDTOS, staffDTOS));
+            logService.saveLog(new MonitoringLogDTO(logCode,tempId, date, details, imageBase64, fieldDTOS, cropDTOS, staffDTOS));
             return new ResponseEntity<>(HttpStatus.CREATED);
 
         } catch (DataPersistException e) {
