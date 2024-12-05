@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.*;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/field")
 public class FieldController {
@@ -41,8 +41,12 @@ public class FieldController {
         String image2Base64 ="";
 
         // Create and set Point object
+        /*Point point = new Point();
+        point.setLocation(Double.valueOf(x),Double.valueOf(y));*/
         Point point = new Point();
-        point.setLocation(Double.valueOf(x),Double.valueOf(y));
+        /*point.setLocation((int) Double.valueOf(x).doubleValue(), (int) Double.valueOf(y).doubleValue());*/
+
+        point.setLocation((int) Double.parseDouble(x), (int) Double.parseDouble(y));
         try {
 
             image1Base64 = AppUtil.imageToBase64(image1.getBytes());

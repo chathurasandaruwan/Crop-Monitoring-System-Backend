@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/staff")
 public class StaffController {
@@ -28,7 +28,6 @@ public class StaffController {
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO){
         try {
             staffDTO.setId(AppUtil.generateStaffId());
-            System.out.println(staffDTO.getId());
             // call service layer
             service.saveStaff(staffDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
