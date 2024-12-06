@@ -83,4 +83,8 @@ public class Mapping {
     public List<MonitoringLogDTO> asLogDTOList(List<MonitoringLogEntity> all) {
         return mapper.map(all,new TypeToken<List<MonitoringLogDTO>>(){}.getType());
     }
+
+    public UserEntity toUserEntity(UserDTO userDTO) {
+        return mapper.map(userDTO,UserEntity.class);
+    }
 }

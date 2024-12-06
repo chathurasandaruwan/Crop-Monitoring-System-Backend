@@ -46,5 +46,7 @@ public class StaffEntity implements SuperEntity {
     private List<EquipmentEntity> equipment;
     @ManyToMany(mappedBy = "staffs", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<MonitoringLogEntity> logs;
+    @OneToOne
+    private UserEntity user;
 
 }
