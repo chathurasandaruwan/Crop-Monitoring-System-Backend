@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+@CrossOrigin
 @RequestMapping("api/v1/auth/")
 @RestController
 @RequiredArgsConstructor

@@ -27,7 +27,7 @@ public class UserEntity implements UserDetails,SuperEntity {
     private String password;
     private Role role;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private StaffEntity staff;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

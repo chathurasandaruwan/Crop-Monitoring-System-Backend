@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -25,7 +26,7 @@ public class SecurityConfig {
     private final JWTConfigFilter jwtConfigFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.csrf(AbstractHttpConfigurer::disable)
+       /* http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/v1/auth/**").permitAll()
                                 .anyRequest().authenticated()
@@ -33,7 +34,19 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtConfigFilter,UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+        return http.build();*/
+        return http
+                .csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests((request) -> request
+                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .cors(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtConfigFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
